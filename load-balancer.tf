@@ -13,6 +13,8 @@ resource "aws_alb_target_group" "default-target-group" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = module.vpc.vpc_id
+  # Target is set to ip for FARGATE clusters
+  target_type = "ip"
 
   health_check {
     path                = var.health_check_path

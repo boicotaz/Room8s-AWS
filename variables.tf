@@ -14,3 +14,16 @@ variable "personal_access" {
   description = "Personal public ip address. Used in default sg to allow access to all aws resources"
   type        = string
 }
+
+variable "log_retention_in_days" {
+  description = "Amount of time in days to keep logs"
+  type        = number
+  default     = 7
+}
+
+variable "aws_region" {
+  description = "AWS region to deploy infra"
+  type        = string
+  default     = "us-east-2"
+
+}

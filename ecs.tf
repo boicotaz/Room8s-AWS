@@ -1,3 +1,14 @@
+data "template_file" "container_definitions" {
+  template = file("${var.container_defenitions_path[0]}")
+  vars = {
+
+    image              = var.ecr_repo_url
+    aws_region         = var.aws_region
+    logs_group         = aws_cloudwatch_log_group.log-group.id
+    logs_stream_prefix = "${var.ecs_cluster_name}"
+  }
+
+}
 resource "aws_ecs_task_definition" "hello_world" {
   family                   = "hello-world-app"
   network_mode             = "awsvpc"
@@ -6,31 +17,7 @@ resource "aws_ecs_task_definition" "hello_world" {
   memory                   = 1024
   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
 
-  container_definitions = <<DEFINITION
-[
-  {
-    "image": "425832464758.dkr.ecr.us-east-2.amazonaws.com/quickstart-nginx:latest",
-    "cpu": 512,
-    "memory": 1024,
-    "name": "mynginx-quickstart",
-    "networkMode": "awsvpc",
-    "logConfiguration": {
-      "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "${aws_cloudwatch_log_group.log-group.id}",
-          "awslogs-region": "${var.aws_region}",
-          "awslogs-stream-prefix": "${var.ecs_cluster_name}"
-        }
-      },
-    "portMappings": [
-      {
-        "containerPort": 80,
-        "hostPort": 80
-      }
-    ]
-  }
-]
-DEFINITION
+  container_definitions = data.template_file.container_definitions.rendered
 }
 
 resource "aws_ecs_cluster" "main" {

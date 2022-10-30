@@ -25,5 +25,15 @@ variable "aws_region" {
   description = "AWS region to deploy infra"
   type        = string
   default     = "us-east-2"
+}
 
+variable "container_defenitions_path" {
+  description = "Path to container definitions file"
+  type        = list(string)
+  default     = ["container_definitions/quickstart.json.tpl"]
+}
+
+variable "ecr_repo_url" {
+  description = "Url for the ECR that contains the image for the cluster"
+  type        = string
 }

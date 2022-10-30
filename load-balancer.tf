@@ -3,7 +3,7 @@ resource "aws_lb" "production" {
   name               = "${var.ecs_cluster_name}-alb"
   load_balancer_type = "application"
   internal           = false
-  security_groups    = [aws_security_group.load-balancer.id]
+  security_groups    = [aws_security_group.load_balancer.id]
   subnets            = module.vpc.public_subnets
 }
 

@@ -28,7 +28,7 @@ resource "aws_security_group" "load_balancer" {
 resource "aws_security_group" "ecs_service" {
 
   name        = "HTTP"
-  description = "Allow all HTTP inbound traffic"
+  description = "Allow inbound traffic from LB"
   vpc_id      = module.vpc.vpc_id
 
   ingress {

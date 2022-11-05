@@ -24,8 +24,8 @@ resource "aws_security_group" "load_balancer" {
 
 }
 
-# ECS Security group (traffic ALB -> ECS, ssh -> ECS)
-resource "aws_security_group" "ecs_service" {
+# ECS Service Security group (traffic ALB -> ECS)
+resource "aws_security_group" "ecs" {
 
   name        = "HTTP"
   description = "Allow inbound traffic from LB"
@@ -38,6 +38,14 @@ resource "aws_security_group" "ecs_service" {
     protocol        = "tcp"
     security_groups = [aws_security_group.load_balancer.id]
     #cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "ssh from ME"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["${var.personal_access}"]
   }
 
   egress {

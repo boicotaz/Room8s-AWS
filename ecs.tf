@@ -9,6 +9,7 @@ data "template_file" "container_definitions" {
   }
 
 }
+
 resource "aws_ecs_task_definition" "hello_world" {
   family                   = "hello-world-app"
   network_mode             = "awsvpc"
@@ -48,4 +49,9 @@ resource "aws_ecs_service" "hello_world" {
 
   #depends_on = [aws_alb_listener.ecs-alb-http-listener, aws_iam_role_policy.AWSServiceRoleForECS_policy]
   depends_on = [aws_alb_listener.ecs-alb-http-listener]
+  # Optional: Allow external changes without Terraform plan difference
+  lifecycle {
+    ignore_changes = [desired_count]
+  }
+
 }

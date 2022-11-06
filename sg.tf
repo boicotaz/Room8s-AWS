@@ -32,12 +32,12 @@ resource "aws_security_group" "ecs" {
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    description     = "HTTP from anywhere"
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
+    # Container Port allocation is randomized in ECS Container Host, hence the following rule
+    description     = "ALL traffic from LB"
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
     security_groups = [aws_security_group.load_balancer.id]
-    #cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {

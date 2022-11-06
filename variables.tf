@@ -37,3 +37,10 @@ variable "ecr_repo_url" {
   description = "Url for the ECR that contains the image for the cluster"
   type        = string
 }
+
+variable "amis" {
+  description = "Which AMI to spawn."
+  default = {
+    us-east-2 = "ami-0effacb21ac1c631a"
+  }
+}

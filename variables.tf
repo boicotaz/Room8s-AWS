@@ -33,7 +33,22 @@ variable "container_defenitions_path" {
   default     = ["container_definitions/quickstart.json.tpl"]
 }
 
-variable "ecr_repo_url" {
-  description = "Url for the ECR that contains the image for the cluster"
-  type        = string
+variable "amis" {
+  description = "Which AMI to spawn."
+  default = {
+    us-east-2 = "ami-0effacb21ac1c631a"
+  }
+}
+
+variable "backend_container_config" {
+  description = "configuration variables for backend container"
+  type = object({
+    cpu           = number
+    memory        = number
+    image         = string
+    name          = string
+    containerPort = number
+    hostPort      = number
+  })
+
 }

@@ -14,7 +14,8 @@ resource "aws_alb_target_group" "default-target-group" {
   protocol = "HTTP"
   vpc_id   = module.vpc.vpc_id
   # Target is set to ip for FARGATE clusters
-  target_type = "ip"
+  target_type          = "instance"
+  deregistration_delay = "30"
 
   health_check {
     path                = var.health_check_path

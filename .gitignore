@@ -20,3 +20,6 @@ crash.*.log
 
 # Ignore swap files
 *.swp
+
+# This file contains infrastructure configuration intended only for test purposes on development lifecycles
+test.tf

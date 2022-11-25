@@ -2,10 +2,16 @@ data "template_file" "container_definitions" {
   template = file("${var.container_defenitions_path[0]}")
   vars = {
 
-    image              = var.ecr_repo_url
+    image              = var.backend_container_config.image
+    cpu                = var.backend_container_config.cpu
+    memory             = var.backend_container_config.memory
+    name               = var.backend_container_config.name
+    containerPort      = var.backend_container_config.containerPort
+    hostPort           = var.backend_container_config.hostPort
     aws_region         = var.aws_region
     logs_group         = aws_cloudwatch_log_group.log-group.id
     logs_stream_prefix = "${var.ecs_cluster_name}"
+
   }
 
 }

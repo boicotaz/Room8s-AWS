@@ -1,9 +1,9 @@
 [
   {
     "image": "${image}",
-    "cpu": 512,
-    "memory": 1024,
-    "name": "mynginx-quickstart",
+    "cpu": "${cpu}",
+    "memory": "${memory}",
+    "name": "${name}",
     "networkMode": "awsvpc",
     "logConfiguration": {
       "logDriver": "awslogs",
@@ -15,8 +15,8 @@
       },
     "portMappings": [
       {
-        "containerPort": 80,
-        "hostPort": 0
+        "containerPort": "${containerPort}",
+        "hostPort": "${hostPort}"
       }
     ]
   }

@@ -52,3 +52,9 @@ variable "backend_container_config" {
   })
 
 }
+
+variable "env" {
+  description = "Infrastructure environment e.g dev,test,prod. Used in resource tags"
+  type        = string
+
+}

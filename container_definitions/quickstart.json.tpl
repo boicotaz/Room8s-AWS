@@ -1,8 +1,8 @@
 [
   {
     "image": "${image}",
-    "cpu": "${cpu}",
-    "memory": "${memory}",
+    "cpu": ${cpu},
+    "memory": ${memory},
     "name": "${name}",
     "networkMode": "awsvpc",
     "logConfiguration": {
@@ -15,8 +15,8 @@
       },
     "portMappings": [
       {
-        "containerPort": "${containerPort}",
-        "hostPort": "${hostPort}"
+        "containerPort": ${containerPort},
+        "hostPort": ${hostPort}
       }
     ]
   }

@@ -43,8 +43,8 @@ resource "aws_ecs_service" "hello_world" {
 
   load_balancer {
     target_group_arn = aws_alb_target_group.default-target-group.arn
-    container_name   = "mynginx-quickstart"
-    container_port   = 80
+    container_name   = var.backend_container_config.name
+    container_port   = var.backend_container_config.containerPort
   }
 
   depends_on = [aws_alb_listener.ecs-alb-http-listener]

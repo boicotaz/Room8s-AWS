@@ -5,7 +5,7 @@ resource "aws_autoscaling_group" "ecs-cluster" {
   desired_capacity     = "2"
   health_check_type    = "EC2"
   launch_configuration = aws_launch_configuration.ecs_instance.name
-  vpc_zone_identifier  = module.vpc.public_subnets
+  vpc_zone_identifier  = module.vpc.private_subnets
 }
 
 resource "aws_launch_configuration" "ecs_instance" {
@@ -15,7 +15,7 @@ resource "aws_launch_configuration" "ecs_instance" {
   security_groups             = [aws_security_group.ecs.id]
   iam_instance_profile        = aws_iam_instance_profile.ecs-instance-profile.name
   key_name                    = aws_key_pair.test-key.key_name
-  associate_public_ip_address = true
+  associate_public_ip_address = false
   user_data                   = "#!/bin/bash\necho ECS_CLUSTER='${var.ecs_cluster_name}-cluster' >> /etc/ecs/ecs.config;echo ECS_BACKEND_HOST= >> /etc/ecs/ecs.config"
 }
 

@@ -6,6 +6,12 @@ resource "aws_autoscaling_group" "ecs-cluster" {
   health_check_type    = "EC2"
   launch_configuration = aws_launch_configuration.ecs_instance.name
   vpc_zone_identifier  = module.vpc.private_subnets
+  # Associating an ECS Capacity Provider to an Auto Scaling Group will automatically add the AmazonECSManaged tag to the Auto Scaling Group. This tag should be included in the aws_autoscaling_group resource configuration to prevent Terraform from removing it in subsequent executions as well as ensuring the AmazonECSManaged tag is propagated to all EC2 Instances in the Auto Scaling Group if min_size is above 0 on creation. Any EC2 Instances in the Auto Scaling Group without this tag must be manually be updated, otherwise they may cause unexpected scaling behavior and metrics.
+  tag {
+    key                 = "AmazonECSManaged"
+    value               = true
+    propagate_at_launch = true
+  }
 }
 
 resource "aws_launch_configuration" "ecs_instance" {

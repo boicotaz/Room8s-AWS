@@ -30,8 +30,8 @@ resource "aws_appautoscaling_policy" "ecs_policy_slace_in" {
 resource "aws_cloudwatch_metric_alarm" "scale_in_alarm" {
   alarm_name          = "scalin-in-alarm"
   comparison_operator = "LessThanOrEqualToThreshold"
-  evaluation_periods  = "1"
-  datapoints_to_alarm = 1
+  evaluation_periods  = "3"
+  datapoints_to_alarm = 3
   metric_name         = "CPUUtilization"
   namespace           = "AWS/ECS"
   period              = "300"

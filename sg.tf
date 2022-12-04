@@ -42,10 +42,18 @@ resource "aws_security_group" "ecs" {
 
   ingress {
     description = "ssh from ME"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["${var.personal_access}"]
+  }
+
+  ingress {
+    description = "Allow ALL inter-instance communication"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    self        = true
   }
 
   egress {

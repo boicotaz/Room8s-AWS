@@ -12,6 +12,10 @@ resource "aws_autoscaling_group" "ecs-cluster" {
     value               = true
     propagate_at_launch = true
   }
+
+  lifecycle {
+    ignore_changes = [desired_capacity]
+  }
 }
 
 resource "aws_launch_configuration" "ecs_instance" {

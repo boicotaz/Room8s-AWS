@@ -18,6 +18,12 @@
         "containerPort": ${containerPort},
         "hostPort": ${hostPort}
       }
+    ],
+    "environment": [
+      {
+        "name": "PORT",
+        "value": "${containerPort}"
+      }
     ]
   }
 ]

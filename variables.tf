@@ -27,10 +27,16 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-variable "container_defenitions_path" {
-  description = "Path to container definitions file"
+variable "backend_container_defenition_path" {
+  description = "Path to backend container definition file"
   type        = list(string)
-  default     = ["container_definitions/quickstart.json.tpl"]
+  default     = ["container_definitions/backend_container_definition.json.tpl"]
+}
+
+variable "frontend_container_defenition_path" {
+  description = "Path to front end container definition file"
+  type        = list(string)
+  default     = ["container_definitions/frontend_container_definition.json.tpl"]
 }
 
 variable "amis" {
@@ -53,8 +59,34 @@ variable "backend_container_config" {
 
 }
 
+variable "frontend_container_config" {
+  description = "configuration variables for backend container"
+  type = object({
+    cpu           = number
+    memory        = number
+    image         = string
+    name          = string
+    containerPort = number
+    hostPort      = number
+  })
+
+}
+
+variable "container_config" {
+  description = "configuration variables for ecs cluster containers"
+  type = map(object({
+    templatePath             = string
+    cpu                      = number
+    memory                   = number
+    image                    = string
+    name                     = string
+    containerPort            = number
+    hostPort                 = number
+    enable_service_discovery = bool
+  }))
+}
+
 variable "env" {
   description = "Infrastructure environment e.g dev,test,prod. Used in resource tags"
   type        = string
-
 }

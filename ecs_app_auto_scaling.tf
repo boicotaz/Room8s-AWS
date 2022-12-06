@@ -1,7 +1,7 @@
 resource "aws_appautoscaling_target" "ecs_target" {
   max_capacity       = 5
   min_capacity       = 1
-  resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.frontend.name}"
+  resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.this["backend"].name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
 }
@@ -39,7 +39,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_in_alarm" {
   threshold           = "40"
   unit                = "Percent"
   dimensions = {
-    ServiceName = "${aws_ecs_service.frontend.name}"
+    ServiceName = "${aws_ecs_service.this["backend"].name}"
     ClusterName = "${aws_ecs_cluster.main.name}"
   }
 
@@ -81,7 +81,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_out_alarm" {
   unit                = "Percent"
 
   dimensions = {
-    ServiceName = "${aws_ecs_service.frontend.name}"
+    ServiceName = "${aws_ecs_service.this["backend"].name}"
     ClusterName = "${aws_ecs_cluster.main.name}"
   }
 

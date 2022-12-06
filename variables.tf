@@ -27,18 +27,6 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-variable "backend_container_defenition_path" {
-  description = "Path to backend container definition file"
-  type        = list(string)
-  default     = ["container_definitions/backend_container_definition.json.tpl"]
-}
-
-variable "frontend_container_defenition_path" {
-  description = "Path to front end container definition file"
-  type        = list(string)
-  default     = ["container_definitions/frontend_container_definition.json.tpl"]
-}
-
 variable "amis" {
   description = "Which AMI to spawn."
   default = {
@@ -46,33 +34,7 @@ variable "amis" {
   }
 }
 
-variable "backend_container_config" {
-  description = "configuration variables for backend container"
-  type = object({
-    cpu           = number
-    memory        = number
-    image         = string
-    name          = string
-    containerPort = number
-    hostPort      = number
-  })
-
-}
-
-variable "frontend_container_config" {
-  description = "configuration variables for backend container"
-  type = object({
-    cpu           = number
-    memory        = number
-    image         = string
-    name          = string
-    containerPort = number
-    hostPort      = number
-  })
-
-}
-
-variable "container_config" {
+variable "ecs_container_config" {
   description = "configuration variables for ecs cluster containers"
   type = map(object({
     templatePath             = string
@@ -83,6 +45,23 @@ variable "container_config" {
     containerPort            = number
     hostPort                 = number
     enable_service_discovery = bool
+  }))
+}
+
+variable "ecs_task_definition_config" {
+  description = "configuration variables for ecs task definitions"
+  type = map(object({
+    cpu    = number
+    memory = number
+  }))
+}
+
+variable "ecs_service_config" {
+  description = "configuration variables for ecs service"
+  type = map(object({
+    desired_count              = number
+    create_loadbalancer        = bool
+    associate_service_registry = bool
   }))
 }
 
